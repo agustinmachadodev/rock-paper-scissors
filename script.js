@@ -1,85 +1,122 @@
 //Rock Paper Scissors
 
+
 let getComputerChoice = () => {
     let options =['rock', 'paper', 'scissors'];
-
+    
     let randomIndex = Math.floor(Math.random() * options.length)
-
+    
     return options[randomIndex];
 } 
 
+let humanScore = 0;
+let computerScore = 0
 
-
-let getHumanChoice = () => {
-    let choice = prompt('Escribe una opcion: rock, paper o scissors').toLowerCase();
-
-
-    if( choice === 'paper' || 
-        choice === 'rock' ||
-        choice === 'scissors') {
-        return choice;
-    
-    }
-
-}
-
-
-const playGame = () => {
-
-    let humanScore = 0;
-    let computerScore = 0;
-
-    let playRound = (humanChoice, computerChoice) => {
-
+let playRound = (humanChoice, computerChoice) => {
 
         if(humanChoice === computerChoice) {
-            console.log(`Empate ambos eligieron ${humanChoice}`);
+            result.textContent = 'Empate!'
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
     
         } else if(humanChoice === 'rock' && computerChoice === 'scissors') {
-            console.log('Ganaste!, la piedra le gana a la tijera');
             humanScore++;
+            result.textContent = 'Ganaste la ronda!, la piedra le gana a la tijera';
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
     
         } else if(humanChoice === 'scissors' && computerChoice === 'rock') {
-            console.log('Perdiste!, la piedra le gana a la tijera');
             computerScore++;
+            result.textContent = 'Perdiste la ronda!, la piedra le gana a la tijera';
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
     
         } else if(humanChoice === 'paper' && computerChoice === 'rock') {
-            console.log('Ganaste!, el papel le gana a la piedra');
             humanScore++;
+            result.textContent = 'Ganaste la ronda!, el papel le gana a la piedra';
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
     
         } else if(humanChoice === 'rock' && computerChoice === 'paper') {
-            console.log('Perdiste!, el papel le gana a la piedra');
             computerScore++;
+            result.textContent = 'Perdiste la ronda!, el papel le gana a la piedra';
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
     
         } else if(humanChoice === 'scissors' && computerChoice === 'paper') {
-            console.log('Ganaste!, La tijera le gana al papel');
             humanScore++;
+            result.textContent = 'Ganaste la ronda!, La tijera le gana al papel' ;
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
 
         } else if(humanChoice === 'paper' && computerChoice === 'scissors') {
-            console.log('Perdiste!, la tijera le gana al papel')
             computerScore++
+            result.textContent = 'Perdiste la ronda!, la tijera le gana al papel';
+            score.textContent = `PUNTAJES: Human ${humanScore} | Computer ${computerScore}`
         }
 
-    }
 
-    for(let i = 0; i < 5; i++) {
-        let humanChoice = getHumanChoice()
-        let computerChoice = getComputerChoice()
+        if(humanScore === 5) {
+            result.textContent = `GANASTE EL JUEGO`
+            score.textContent = `PUNTAJE FINAL: Human ${humanScore} | Computer ${computerScore}`;
+            btnRock.disabled = true
+            btnPaper.disabled = true
+            btnScissors.disabled = true
 
-        playRound(humanChoice, computerChoice);
-    }
+        } else if (computerScore === 5) {
+            result.textContent = `PERDISTE EL JUEGO`
+            score.textContent = `PUNTAJE FINAL: Human ${humanScore} | Computer ${computerScore}`;
+        
+            btnRock.disabled = true
+            btnPaper.disabled = true
+            btnScissors.disabled = true
+        }
 
-    if(humanScore === computerScore) {
-        console.log('Empate')
-    
-    } else if(humanScore > computerScore) {
-        console.log('Ganaste el juego!')
-    
-    } else {
-        console.log('Perdiste el juego')
-    }
-
-    console.log(`Puntaje Final: Human -> ${humanScore}, Computer -> ${computerScore}`)
 }
 
-playGame();
+
+let container = document.createElement('div');
+
+container.classList.add('container');
+
+
+let btnRock = document.createElement('button');
+btnRock.classList.add('btn');
+btnRock.textContent = 'ROCK'
+
+let btnPaper = document.createElement('button');
+btnPaper.classList.add('btn');
+btnPaper.textContent = 'PAPER'
+
+
+let btnScissors = document.createElement('button');
+btnScissors.classList.add('btn');
+btnScissors.textContent = 'SCISSORS'
+
+
+container.appendChild(btnRock);
+container.appendChild(btnPaper);
+container.appendChild(btnScissors);
+
+
+btnRock.addEventListener('click', () => {
+    playRound('rock', getComputerChoice())
+})
+
+btnPaper.addEventListener('click', () => {
+    playRound('paper', getComputerChoice())
+})
+
+btnScissors.addEventListener('click', () => {
+    playRound('scissors', getComputerChoice())
+})
+
+
+let resultDiv = document.createElement('div');
+
+resultDiv.classList.add('result-container');
+
+let result = document.createElement('p');
+
+let score = document. createElement('p');
+
+resultDiv.appendChild(result);
+resultDiv.appendChild(score);
+
+container.appendChild(resultDiv);
+
+document.body.appendChild(container);
