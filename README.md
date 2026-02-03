@@ -10,7 +10,7 @@ Este proyecto forma parte del curso Foundations de The Odin Project.
 - El usuario elige entre piedra, papel o tijera
 - La computadora elige una opción al azar
 - El juego se juega durante 5 rondas
-- Al final se muestra el ganador en la consola
+- Al final se muestra el ganador en la pantalla
 
 
 ## Tecnologías usadas
